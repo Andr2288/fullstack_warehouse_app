@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/categories');
 const productRoutes = require('./routes/products');
 const supplierRoutes = require('./routes/suppliers');
+const stockMovementRoutes = require('./routes/stockMovements');
 const { connectDB } = require('./config/database');
 
 const app = express();
@@ -23,25 +24,21 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/suppliers', supplierRoutes);
+app.use('/api/stock-movements', stockMovementRoutes);
 
 // Головна сторінка
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.html'));
-});
-
-// Dashboard
-app.get('/dashboard.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
-});
-
-// Categories page
-app.get('/categories.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'categories.html'));
-});
-
-// Products page
-app.get('/products.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'products.html'));
+    res.json({
+        success: true,
+        message: 'Warehouse Management API',
+        endpoints: {
+            auth: '/api/auth',
+            products: '/api/products',
+            categories: '/api/categories',
+            suppliers: '/api/suppliers',
+            stockMovements: '/api/stock-movements'
+        }
+    });
 });
 
 // Error handling middleware
